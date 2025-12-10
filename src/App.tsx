@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   Github,
   Linkedin,
@@ -16,6 +17,8 @@ import {
   Download,
   ArrowDown
 } from 'lucide-react';
+
+import {projects} from './projectsData';
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -120,7 +123,7 @@ export default function Portfolio() {
     },
     {
       name: 'Soft Skills',
-      icon: Globe, // ganti ke icon apapun yg lu punya
+      icon: Globe, 
       items: [
         'Leadership',
         'Team Collaboration',
@@ -129,58 +132,6 @@ export default function Portfolio() {
         'Initiative',
         'Organizational Involvement'
       ]
-    }
-  ];
-
-
-  const projects = [
-    {
-      title: "Sistem Informasi Program Studi Manajemen Rekayasa IT Del",
-      image: "/projects/mr-del.jpg",
-      desc: "Full-stack system with UI design, system flow, and backend logic for 200+ students. Implemented core front-end features and data handling.",
-      tags: ["Full Stack", "UI/UX", "MySQL", "System Design"],
-      live: "#",
-      github: "#"
-    },
-    {
-      title: "Warehouse Inventory Management App",
-      image: "/projects/warehouse.jpg",
-      desc: "Java Swing + MySQL desktop application with 4 CRUD modules, validation, search function, and structured MySQL schema.",
-      tags: ["Java Swing", "MySQL", "Desktop App", "CRUD"],
-      live: "#",
-      github: "#"
-    },
-    {
-      title: "Redesign Rumah Kreatif Toba",
-      image: "/projects/rkt-redesign.jpg",
-      desc: "Led UI redesign using heuristic evaluation, competitive analysis, and SUS testing. Produced high-fidelity prototypes and ran usability tests on 10 respondents.",
-      tags: ["UI/UX", "Figma", "Usability Testing", "Heuristic Evaluation"],
-      live: "#",
-      github: "#"
-    },
-    {
-      title: "Sistem Informasi Kemahasiswaan IT Del",
-      image: "/projects/kemahasiswaan.jpg",
-      desc: "Front-end developer for a multi-page student system with 500+ users. Built using Inertia.js and automated 20+ test cases.",
-      tags: ["Inertia.js", "Laravel", "Frontend", "Testing"],
-      live: "#",
-      github: "#"
-    },
-    {
-      title: "B-Call App",
-      image: "/projects/bcall.jpg",
-      desc: "Designed and built the mobile front-end for real-time calorie and BMI tracking. Created interface flows and contributed to app logic.",
-      tags: ["Mobile App", "UI/UX", "Figma", "Frontend"],
-      live: "#",
-      github: "#"
-    },
-    {
-      title: "Whisper + DeBERTa Coherence Evaluation System",
-      image: "/projects/ielts-ai.jpg",
-      desc: "Front-end developer for a system evaluating IELTS Speaking coherence using Whisper and DeBERTa v3-base. Contributed to UI/UX, dataset prep, and documentation.",
-      tags: ["AI", "NLP", "Whisper", "DeBERTa", "Frontend"],
-      live: "#",
-      github: "#"
     }
   ];
 
@@ -555,47 +506,54 @@ export default function Portfolio() {
       >
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Featured Projects</h2>
-
-          <div className="grid md:grid-cols-2 gap-10">
-            {projects.map((project, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="group bg-gray-50 dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
-              >
-                <div className="relative overflow-hidden h-100">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{project.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">{project.desc}</p>
-                  <div className="flex flex-wrap gap-3 mb-6">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="px-4 py-2 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-6">
-                    <a href={project.live} target="_blank" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-all hover:gap-3">
-                      <Globe size={18} /> Live Demo
-                    </a>
-                    <a href={project.github} target="_blank" className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all hover:gap-3">
-                      <Github size={18} /> Code
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            <div className="grid md:grid-cols-2 gap-10">
+              {projects.map((project, i) => (
+                <motion.div
+                  key={project.slug}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.2 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                >
+                  <Link
+                    to={`/projects/${project.slug}`}
+                    className="block group bg-gray-50 dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
+                  >
+                    <div className="relative overflow-hidden h-100">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-6">
+                        {project.desc}
+                      </p>
+                      <div className="flex flex-wrap gap-3 mb-6">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-4 py-2 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex gap-6 text-sm">
+                        <span className="flex items-center gap-2 text-blue-600 group-hover:gap-3 transition-all">
+                          <Globe size={16} /> View details
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
           </div>
         </div>
       </motion.section>
