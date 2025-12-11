@@ -260,7 +260,7 @@ useEffect(() => {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
             <motion.a
-              href="/pdf/rahelcv.pdf"
+              href="/pdf/Rahel_N_Pangaribuan_Resume.pdf"
               download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -950,7 +950,7 @@ Information Division
                 
                 {/* Other CTA: Download CV */}
                 <a
-                  href="/pdf/rahelcv.pdf"
+                  href="/pdf/Rahel_N_Pangaribuan_Resume.pdf"
                   download
                   className="flex items-center gap-3 justify-center p-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow hover:opacity-95 transition-opacity"
                 >
