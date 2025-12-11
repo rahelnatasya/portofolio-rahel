@@ -331,7 +331,7 @@ useEffect(() => {
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Website Developer • UI/UX Enthusiast</p>
 
                 <div className="flex gap-3 mb-5">
-                  <a href="/pdf/rahelcv.pdf" download className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow-md hover:scale-105 transition-transform">
+                  <a href="/pdf/Rahel_N_Pangaribuan_Resume.pdf" download className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow-md hover:scale-105 transition-transform">
                     <Download size={16} /> Download CV
                   </a>
                   <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
