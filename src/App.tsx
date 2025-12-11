@@ -23,11 +23,17 @@ import {projects} from './projectsData';
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [typedText, setTypedText] = useState('');
   const fullText = "Frontend-leaning Web Developer";
-
+  const [isDark, setIsDark] = useState<boolean>(() => {
+  // safe read (client-only)
+  try {
+    return localStorage.getItem('theme') === 'dark';
+  } catch {
+    return false;
+  }
+});
   // Typing animation
   useEffect(() => {
     let index = 0;
@@ -43,13 +49,15 @@ export default function Portfolio() {
   }, []);
 
   // Dark mode
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDark]);
+useEffect(() => {
+  if (isDark) {
+    document.documentElement.classList.add('dark');
+    try { localStorage.setItem('theme', 'dark'); } catch {}
+  } else {
+    document.documentElement.classList.remove('dark');
+    try { localStorage.setItem('theme', 'light'); } catch {}
+  }
+}, [isDark]);
 
   // Scroll effects
   useEffect(() => {
@@ -584,7 +592,8 @@ export default function Portfolio() {
                     <h3 className="text-xl font-semibold">Panitia KPU BEM IT Del</h3>
                     <p className="text-gray-700 dark:text-gray-300 mt-1">Administrative Division Member</p>
                     <p className="text-gray-600 dark:text-gray-400 mt-3 text-sm">
-                      Mengelola pendaftaran kandidat, verifikasi dokumen, dan pengumuman pemilihan. Membantu proses penghitungan suara bersama Divisi Data & Informasi.
+                     Managed candidate registration, document verification, and election announcements while assisting in vote counting with the Data &
+Information Division
                     </p>
                   </div>
                 </div>
@@ -605,8 +614,7 @@ export default function Portfolio() {
                     <h3 className="text-xl font-semibold">Majelis Permusyawaratan Mahasiswa</h3>
                     <p className="text-gray-700 dark:text-gray-300 mt-1">Member of Commission A</p>
                     <p className="text-gray-600 dark:text-gray-400 mt-3 text-sm">
-                      Mengawasi proses administrasi, dokumentasi, penjadwalan, serta supervisi sekretariat untuk memastikan transparansi dan efisiensi kerja organisasi.
-                    </p>
+                      Oversaw administrative processes, documentation, scheduling, and secretarial supervision to maintain transparency and efficiency.</p>
                   </div>
                 </div>
 
@@ -626,7 +634,7 @@ export default function Portfolio() {
                     <h3 className="text-xl font-semibold">Information Technology Association — Caderization Committee</h3>
                     <p className="text-gray-700 dark:text-gray-300 mt-1">Member of Event Committee</p>
                     <p className="text-gray-600 dark:text-gray-400 mt-3 text-sm">
-                      Mendukung operasional event: koordinasi transisi, pemandu peserta, dan memastikan agenda berjalan lancar serta tepat waktu.
+                     Supported event operations by coordinating transitions, guiding participants, and ensuring the agenda ran smoothly.
                     </p>
                   </div>
                 </div>
@@ -776,7 +784,7 @@ export default function Portfolio() {
           >
             <h2 className="text-4xl md:text-5xl font-bold">Let's Work Together</h2>
             <p className="text-gray-600 dark:text-gray-400">
-              Punya ide atau project? Hubungi lewat telepon, email, atau cek profil publik di social media. Link tersedia di samping.
+            Have an idea or project? Contact me by phone, email, or check our public social media profiles. Links are provided below.
             </p>
 
             <div className="grid grid-cols-1 gap-4">
@@ -793,7 +801,6 @@ export default function Portfolio() {
                   <a href="tel:+6282163773422" className="text-gray-700 dark:text-gray-300 hover:underline">
                     +62 821-6377-3422
                   </a>
-                  <p className="text-sm text-gray-500">Tersedia 09.00–18.00 WIB.</p>
                 </div>
               </motion.div>
 
@@ -810,7 +817,6 @@ export default function Portfolio() {
                   <a href="mailto:rahelattractive@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
                     rahelattractive@gmail.com
                   </a>
-                  <p className="text-sm text-gray-500">Fast response kalau jelas kebutuhannya.</p>
                 </div>
               </motion.div>
 
@@ -898,28 +904,10 @@ export default function Portfolio() {
               <p className="text-gray-600 dark:text-gray-400 mb-6">Follow for updates, project previews, and occasional tech rants.</p>
 
               <div className="grid grid-cols-1 gap-4">
-                {/* Twitter */}
-                <a
-                  href="https://twitter.com/your_twitter_handle" /* replace with actual handle */
-                  target="_blank"
-                  className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/60 hover:scale-105 transition-transform"
-                >
-                  <div className="p-2 rounded-full bg-blue-500 text-white">
-                    {/* lucide-react does have a Twitter icon; if not, swap */}
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M22.46 6c-.77.35-1.5.58-2.26.69.81-.5 1.44-1.28 1.74-2.21-.76.45-1.6.78-2.49.96A4.02 4.02 0 0015.5 4c-2.2 0-4 1.78-4 3.98 0 .31.03.62.1.91-3.33-.17-6.28-1.78-8.26-4.23-.34.6-.54 1.3-.54 2.04 0 1.41.7 2.66 1.77 3.39-.65-.02-1.27-.2-1.8-.5v.05c0 1.97 1.42 3.61 3.3 3.98-.34.1-.7.16-1.06.16-.26 0-.5-.02-.74-.07.51 1.64 2 2.84 3.76 2.88A8.07 8.07 0 012 19.54 11.36 11.36 0 008.29 21c6.39 0 9.89-5.3 9.89-9.89v-.45A6.99 6.99 0 0022.46 6z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-medium">Twitter</div>
-                    <div className="text-sm text-gray-500">@your_twitter_handle</div>
-                  </div>
-                  <div className="ml-auto text-sm text-blue-600">Follow</div>
-                </a>
 
-                {/* Instagram */}
+                                {/* Instagram */}
                 <a
-                  href="https://instagram.com/your_instagram_handle" /* replace with actual handle */
+                  href="https://www.instagram.com/rahelpgrb/" /* replace with actual handle */
                   target="_blank"
                   className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/60 hover:scale-105 transition-transform"
                 >
@@ -931,11 +919,35 @@ export default function Portfolio() {
                   </div>
                   <div>
                     <div className="font-medium">Instagram</div>
-                    <div className="text-sm text-gray-500">@your_instagram_handle</div>
+                    <div className="text-sm text-gray-500">@rahelpgrb</div>
                   </div>
                   <div className="ml-auto text-sm text-pink-500">Follow</div>
                 </a>
+              
+                {/* Spotify */}
+                <a
+                  href="https://open.spotify.com/user/31vkqqhkgsozt2ect3lhq73vzma4?si=rNmFgoMORAuW_w1us2GLNg"
+                  target="_blank"
+                  className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/60 hover:scale-105 transition-transform"
+                >
+                  <div className="p-2 rounded-full bg-green-500 text-white">
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 168 168"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M84 0a84 84 0 1 0 84 84A84 84 0 0 0 84 0Zm38.4 120a6.37 6.37 0 0 1-8.73 2c-23.85-14.6-53.82-17.9-89.12-9.75a6.4 6.4 0 1 1-2.82-12.47c38.93-8.8 72.39-4.9 99.3 11.6a6.34 6.34 0 0 1 2.37 8.62Zm12.4-27.9a8 8 0 0 1-10.9 2.5c-27.3-16.6-69-21.4-101.3-11.6a8 8 0 0 1-4.6-15.3c36.6-11 83.2-5.7 115.2 13.2a8 8 0 0 1 2.6 11.2Zm1.1-29.5C107.1 43.8 54.2 41.7 29 49a9.6 9.6 0 1 1-5.5-18.4c30.4-9.2 88.3-6.7 122.4 14.2a9.6 9.6 0 0 1-9.9 16.1Z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="font-medium">Spotify | @meraqel</div>
+                    
+                    <div className="ml-auto text-sm text-blue-600">Follow and share a best playlist together</div>
+                </div>
+                </a> 
 
+                
                 {/* Other CTA: Download CV */}
                 <a
                   href="/pdf/rahelcv.pdf"
@@ -949,10 +961,10 @@ export default function Portfolio() {
 
             {/* Big social badges */}
             <div className="mt-6 flex items-center gap-4">
-              <a href="https://twitter.com/your_twitter_handle" target="_blank" className="flex-1 p-3 rounded-lg bg-blue-500 text-white text-center font-medium hover:scale-105 transition-transform">
-                Twitter
+              <a href="https://open.spotify.com/user/31vkqqhkgsozt2ect3lhq73vzma4?si=rNmFgoMORAuW_w1us2GLNg" target="_blank" className="flex-1 p-3 rounded-lg bg-green-500 text-white text-center font-medium hover:scale-105 transition-transform">
+                Spotify
               </a>
-              <a href="https://instagram.com/your_instagram_handle" target="_blank" className="flex-1 p-3 rounded-lg bg-gradient-to-br from-pink-500 to-orange-400 text-white text-center font-medium hover:scale-105 transition-transform">
+              <a href="https://www.instagram.com/rahelpgrb/" target="_blank" className="flex-1 p-3 rounded-lg bg-gradient-to-br from-pink-500 to-orange-400 text-white text-center font-medium hover:scale-105 transition-transform">
                 Instagram
               </a>
             </div>
